@@ -2,9 +2,6 @@ import os
 import concurrent.futures
 import fnmatch
 
-from datetime import datetime
-startTime = datetime.now()
-
 def find_git_repos(directory, exclude_dirs, results):
   for root, dirnames, filenames in os.walk(directory):
     # Skip excluded directories
@@ -82,8 +79,3 @@ def main():
       print(repo_path)
   else:
     print("No Git repositories found.")
-
-
-if __name__ == "__main__":
-  main()
-  print("TIME: ", datetime.now() - startTime)

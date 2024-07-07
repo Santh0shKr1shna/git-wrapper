@@ -43,7 +43,7 @@ def find_git_repos(directory, exclude_dirs):
   
   return git_repos
 
-def search_single_threaded():
+def Search_single_threaded():
   git_repos = find_git_repos(directory_to_search, exclude_dirs)
   
   if git_repos:
@@ -70,7 +70,7 @@ def find_git_repos_concurrent(directory, exclude_dirs, results):
     if '.git' in dirnames:
       results.append(os.path.join(root, '.git'))
 
-def search_multi_threaded():
+def Search_multi_threaded():
   results = []
   
   # List to store initial directories to search
@@ -96,3 +96,5 @@ def search_multi_threaded():
     print("No Git repositories found.")
     
   return results
+
+# print(Search_multi_threaded())

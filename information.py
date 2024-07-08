@@ -16,7 +16,7 @@ def get_repo_status(git_path):
   """Get the status of the Git repository by reading the index and worktree."""
   original_cwd = os.getcwd()
   os.chdir(os.path.dirname(git_path))
-  status = os.popen('git diff --name-status').read()
+  status = os.popen('git status --short').read()
   os.chdir(original_cwd)
   return status
 
@@ -88,6 +88,7 @@ def Get_repo_info(git_path):
   
   response["status"] = get_repo_status(git_path)
   response["remotes"] = get_remote_connections(git_path)
+  response["branches"] = get_branch_info(git_path)
   response["head"] = get_head_info(git_path)
   response["lastCommit"] = get_last_commit(git_path)
   

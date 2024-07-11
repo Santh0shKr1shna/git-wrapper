@@ -1,5 +1,6 @@
 import os
 from time import strftime, localtime
+import search
 
 def read_git_file(git_path, *path_parts):
   """Read a file from the .git directory."""
@@ -86,13 +87,24 @@ def Get_repo_info(git_path):
     print("Not inside a Git repository.")
     return response
   
-  response["status"] = get_repo_status(git_path)
+  # response["status"] = get_repo_status(git_path)
   response["remotes"] = get_remote_connections(git_path)
   response["branches"] = get_branch_info(git_path)
   response["head"] = get_head_info(git_path)
   response["lastCommit"] = get_last_commit(git_path)
   
   return response
+
+def Get_home_page():
+  paths = search.Search_multi_threaded()
+  if not paths:
+    return []
+  
+  result = []
+  for path in paths:
+    result.append(Get_repo_info(path))
+    
+  return result
 
 def main(git_path):
   if not os.path.isdir(git_path):
@@ -113,6 +125,6 @@ def main(git_path):
     print("\nLast Commit:\n No commits found.")
   print("\nBranches:\n", get_branch_info(git_path))
 
-
-# if __name__ == "__main__":
+if __name__ == "__main__":
+  print(Get_home_page())
 #   main('C:\\Users\\Santhosh\\Desktop\\Projects\\StalkTalk\\.git')

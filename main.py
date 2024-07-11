@@ -1,7 +1,7 @@
 import flask
 
-from search import Search_multi_threaded
-from information import Get_repo_info
+import search
+import information
 import json
 
 from flask import Flask
@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/local-repos', methods=['GET'])
 def GET_Local_Repos():
-  result = Search_multi_threaded()
+  result = search.Search_multi_threaded()
   print(result)
   return json.JSONEncoder().encode(result)
 
@@ -26,7 +26,7 @@ def GET_Repo_Info():
       mimetype='application/json'
     )
   
-  data = Get_repo_info(git_path)
+  data = information.Get_repo_info(git_path)
   print(data)
   
   response = app.response_class(
@@ -36,6 +36,19 @@ def GET_Repo_Info():
   )
   return response
   
+@app.route('/home', methods=['GET'])
+def GET_Home():
+  data = information.Get_home_page()
+  print(data)
+  
+  response = app.response_class(
+    response = json.dumps(data),
+    status = 200,
+    mimetype='application/data'
+  )
+  
+  return response
+
 
 def main():
   app.run()

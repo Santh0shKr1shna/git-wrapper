@@ -9,6 +9,7 @@ from flask import request
 
 app = Flask(__name__)
 
+# Testing
 @app.route('/local-repos', methods=['GET'])
 def GET_Local_Repos():
   result = search.Search_multi_threaded()
@@ -49,6 +50,28 @@ def GET_Home():
   
   return response
 
+@app.route('/execute', methods=['POST'])
+def Execute():
+  response = None
+  status = None
+  if request.method == "POST":
+    command = request.form['command']
+    print(command)
+    
+    data = "success"
+    
+    response = data
+    status = 200
+    
+  else:
+    response = "Method not allowed"
+    status = 405
+    
+  return app.response_class(
+    response=response,
+    status=status,
+    mimetype='application/json'
+  )
 
 def main():
   app.run()
